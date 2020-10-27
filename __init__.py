@@ -1,9 +1,7 @@
 import os
-import shutil, codecs, textwrap
+import time
 
 from calibre.customize.conversion import InputFormatPlugin, OptionRecommendation
-from calibre.ebooks.conversion.plugins.comic_input import ComicInput
-from calibre.ebooks.conversion.plugins.epub_input import EPUBInput
 
 
 class KindleComics(InputFormatPlugin):
@@ -36,4 +34,15 @@ class KindleComics(InputFormatPlugin):
         return PluginWidget(parent, get_option_by_name, get_option_help, db, book_id)
 
     def convert(self, stream, options, file_ext, log, accelerators):
-        pass
+        from calibre_plugins.kindle_comics.make_book import make_book
+        book = os.path.abspath(stream.name)
+        stream.close()
+        print("STREAM: ", stream)
+        print("OPTIONS: ", options)
+        print("FILE_EXT: ", file_ext)
+        print("LOG: ", log)
+        print("ACCELERATORS: ", accelerators)
+        make_book(book, options, log)
+        print("SLEEPING " + options.max_width)
+        time.sleep(int(options.max_width))
+        return None
