@@ -21,18 +21,7 @@
 
 import os
 from PIL import Image, ImageOps, ImageStat, ImageChops, ImageFilter
-from hashlib import md5
-
-
-def md5Checksum(fpath):
-        with open(fpath, 'rb') as fh:
-            m = md5()
-            while True:
-                data = fh.read(8192)
-                if not data:
-                    break
-                m.update(data)
-            return m.hexdigest()
+from calibre_plugins.kindle_comics.util import md5_checksum
 
 
 class ProfileData:
@@ -152,7 +141,7 @@ class ComicPageParser:
                 self.payload.append(['S2', self.source, pagetwo, self.color, self.fill])
             if self.opt['splitter'] > 0:
                 self.payload.append(['R', self.source, self.image.rotate(90, Image.BICUBIC, True),
-                                    self.color, self.fill])
+                                     self.color, self.fill])
         else:
             self.payload.append(['N', self.source, self.image, self.color, self.fill])
 
@@ -253,7 +242,7 @@ class ComicPage:
             else:
                 self.targetPath += '.jpg'
                 self.image.save(self.targetPath, 'JPEG', optimize=1, quality=85)
-            return [md5Checksum(self.targetPath), flags, self.orgPath, self.targetPath]
+            return [md5_checksum(self.targetPath), flags, self.orgPath, self.targetPath]
         except IOError as err:
             raise RuntimeError('Cannot save image. ' + str(err))
 
@@ -347,23 +336,19 @@ class ComicPage:
 
 
 class Cover:
-    def __init__(self, source, target, opt, tomeid):
+    def __init__(self, source, target, opt):
         self.options = opt
         self.source = source
         self.target = target
-        if tomeid == 0:
-            self.tomeid = 1
-        else:
-            self.tomeid = tomeid
         self.image = Image.open(source)
         self.process()
 
     def process(self):
         self.image = self.image.convert('RGB')
         self.image = ImageOps.autocontrast(self.image)
-        if not self.options.forcecolor:
+        if not self.options['forcecolor']:
             self.image = self.image.convert('L')
-        self.image.thumbnail(self.options.profileData[1], Image.LANCZOS)
+        self.image.thumbnail(self.options['profileData'][1], Image.LANCZOS)
         self.save()
 
     def save(self):

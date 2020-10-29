@@ -58,12 +58,12 @@ class KindleComics(InputFormatPlugin):
         from calibre_plugins.kindle_comics.make_book import make_book
         book = os.path.abspath(stream.name)
         stream.close()
-        make_book(_convert_options_to_dict(options), book, log)
+        opt_file = make_book(_convert_options_to_dict(options), book, log)
 
         print("SLEEPING 30")
         if options.manga:
             time.sleep(30)
-        return None
+        return opt_file
 
 
 def _convert_options_to_dict(options):
@@ -88,36 +88,42 @@ def _convert_options_to_dict(options):
     ]
     opts = {
         'manga': options.manga,
-        'webtoon': options.webtoon,
+        # 'webtoon': options.webtoon,
+        'webtoon': False,
         'margins': options.margins,
         'no_greyscale': options.no_greyscale,
         'max_width': int(options.max_width),
         'max_height': int(options.max_height),
 
         'bordersColor': None,
-        'profileData': ['Kindle Paperwhite 3/4/Voyage/Oasis', (1072, 1448), palette, 1.8],
+        'profileData': ('Kindle Paperwhite 3/4/Voyage/Oasis', (1072, 1448), palette, 1.8),
+        'profile': 'KV',
         'hq': False,
         'forceColor': False,
         'forcecolor': False,
         'forcepng': False,
-        'gamma': 0,
+        'gamma': 0.0,
         'stretch': False,
         'kfx': False,
-        'upscale': True,
+        'upscale': False,
         'format': "MOBI",
         'cropping': 2,
         'croppingp': 1.0,
-        'splitter': 1,
-
-        # 'bordersColor': options.bordersColor,
-        # 'profileData': options.profileData,
-        # 'hq': options.hq,
-        # 'forceColor': options.forcecolor,
-        # 'forcepng': options.forcepng,
-        # 'gamma': options.gamma,
-        # 'stretch': options.stretch,
-        # 'kfx': options.kfx,
-        # 'upscale': options.upscale,
-        # 'format': options.format,
+        'splitter': 0,
+        'iskindle': True,
+        'panelview': True,
+        'covers': [],
+        'autoscale': False,
+        'righttoleft': False,
+        'summary': "",
+        'authors': ["Test author"],
+        'chapters': False,
+        'batchsplit': 1,
+        'black_borders': False,
+        'white_borders': False,
+        'customheight': 0,
+        'customwidth': 0,
+        'output': None,
+        'title': 'defaulttitle'
     }
     return opts

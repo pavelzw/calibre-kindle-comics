@@ -1,9 +1,12 @@
 import os
-from re import sub
+from re import sub, split
 from shutil import copytree, move, rmtree
 
 from calibre.ptempfile import PersistentTemporaryDirectory
 from calibre.utils.logging import INFO
+from calibre.utils.short_uuid import uuid4
+from calibre_plugins.kindle_comics.build_file import build_epub
+
 global _log, _options
 
 
@@ -18,6 +21,18 @@ def make_book(options, comic_file, log):
     log.prints(INFO, "Processing images.")
     img_directory_processing(image_path)
     chapter_names = sanitize_tree(image_path)
+
+    options['uuid'] = str(uuid4())
+    _log.prints(INFO, "Creating EPUB file...")
+    return build_epub(path, options, chapter_names)
+
+
+    # filepath.append(getOutputFilename(source, options.output, '.epub', ''))
+    # makeZIP(tome + '_comic', tome, True)
+    # move(tome + '_comic.zip', filepath[-1])
+    # rmtree(tome, True)
+    # if GUI:
+    #     GUI.progressBarTick.emit('tick')
 
 
 def sanitize_tree(file_tree):
@@ -82,7 +97,7 @@ def get_work_folder(comic_file):
 
 
 def img_directory_processing(path):
-    img_metadata = {}
+    _options['imgMetadata'] = {}
     img_old = []
     work = []
     page_number = 0
@@ -97,7 +112,7 @@ def img_directory_processing(path):
 
             for page in output:
                 # additional metadata for the page (rotated, margins)
-                img_metadata[page[0]] = page[1]
+                _options['imgMetadata'][page[0]] = page[1]
                 # remove old images
                 if page[2] != page[3] and page[2] not in img_old:
                     img_old.append(page[2])
