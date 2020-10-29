@@ -1,11 +1,7 @@
 import os
-import random
-import sys
-from multiprocessing import Pool
+from re import sub
 from shutil import copytree, move, rmtree
 
-from calibre.ebooks.metadata import MetaInformation
-from calibre.gui2 import Dispatcher
 from calibre.ptempfile import PersistentTemporaryDirectory
 from calibre.utils.logging import INFO
 global _log, _options
@@ -18,8 +14,49 @@ def make_book(options, comic_file, log):
     _log = log
     log.prints(INFO, "Extracting images.")
     path = get_work_folder(comic_file)
+    image_path = os.path.join(path, "OEBPS", "Images")
     log.prints(INFO, "Processing images.")
-    img_directory_processing(path)
+    img_directory_processing(image_path)
+    chapter_names = sanitize_tree(image_path)
+
+
+def sanitize_tree(file_tree):
+    _log.prints(INFO, "Sanitizing tree...")
+    chapter_names = {}
+    for root, dirs, files in os.walk(file_tree, False):
+        # slugify files
+        for name in files:
+            split_name = os.path.splitext(name)
+            slugified = _slugify(split_name[0], False)
+            while os.path.exists(os.path.join(root, slugified + split_name[1])) \
+                    and split_name[0].upper() != slugified.upper():
+                slugified += "A"
+            new_key = os.path.join(root, slugified + split_name[1])
+            key = os.path.join(root, name)
+            if key != new_key:
+                os.replace(key, new_key)
+        # slugify directories
+        for name in dirs:
+            tmp_name = name
+            slugified = _slugify(name, True)
+            while os.path.exists(os.path.join(root, slugified)) and name.upper() != slugified.upper():
+                slugified += "A"
+            chapter_names[slugified] = tmp_name
+            new_key = os.path.join(root, slugified)
+            key = os.path.join(root, name)
+            if key != new_key:
+                os.replace(key, new_key)
+    return chapter_names
+
+
+def _slugify(value, is_dir):
+    from calibre_plugins.kindle_comics.kindle_comic_lib import slugify
+    if is_dir:
+        value = slugify(value, regex_pattern=r'[^-a-z0-9_\.]+').strip('.')
+    else:
+        value = slugify(value).strip('.')
+    value = sub(r'0*([0-9]{4,})', r'\1', sub(r'([0-9]+)', r'0000\1', value, count=2))
+    return value
 
 
 def get_work_folder(comic_file):
@@ -55,14 +92,14 @@ def img_directory_processing(path):
             work.append([file, dir_path])
     if len(work) > 0:
         for i in work:
-            _log.prints(INFO, "Processing file", i[0])
+            _log.prints(INFO, "Processing file" + i[0])
             output = img_file_processing(i[0], i[1])
 
             for page in output:
                 # additional metadata for the page (rotated, margins)
                 img_metadata[page[0]] = page[1]
                 # remove old images
-                if page[2] not in img_old:
+                if page[2] != page[3] and page[2] not in img_old:
                     img_old.append(page[2])
         for file in img_old:
             os.remove(file)
@@ -81,9 +118,7 @@ def img_file_processing(file, dir_path):
             img.cropPageNumber(_options['croppingp'])
         if _options['cropping'] > 0 and not _options['webtoon']:
             img.cropMargin(_options['croppingp'])
-        print("Autocontrast")
         img.autocontrastImage()
-        print("Resize")
         img.resizeImage()
         if _options['forcepng'] and not _options['forcecolor']:
             img.quantizeImage()

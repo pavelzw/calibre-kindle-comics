@@ -60,7 +60,7 @@ class KindleComics(InputFormatPlugin):
         stream.close()
         make_book(_convert_options_to_dict(options), book, log)
 
-        print("SLEEPING " + options.max_width)
+        print("SLEEPING 30")
         if options.manga:
             time.sleep(30)
         return None
@@ -106,7 +106,8 @@ def _convert_options_to_dict(options):
         'upscale': True,
         'format': "MOBI",
         'cropping': 2,
-        'croppingp': 1.0
+        'croppingp': 1.0,
+        'splitter': 1,
 
         # 'bordersColor': options.bordersColor,
         # 'profileData': options.profileData,

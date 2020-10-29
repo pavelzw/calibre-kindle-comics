@@ -34,6 +34,7 @@ def md5Checksum(fpath):
                 m.update(data)
             return m.hexdigest()
 
+
 class ProfileData:
     def __init__(self):
         pass
@@ -228,14 +229,14 @@ class ComicPage:
         self.rotated = False
         self.orgPath = os.path.join(path[0], path[1])
         if 'N' in mode:
-            self.targetPath = os.path.join(path[0], os.path.splitext(path[1])[0]) + '-converted'
+            self.targetPath = os.path.join(path[0], os.path.splitext(path[1])[0])
         elif 'R' in mode:
-            self.targetPath = os.path.join(path[0], os.path.splitext(path[1])[0]) + '-converted-A'
+            self.targetPath = os.path.join(path[0], os.path.splitext(path[1])[0]) + '-A'
             self.rotated = True
         elif 'S1' in mode:
-            self.targetPath = os.path.join(path[0], os.path.splitext(path[1])[0]) + '-converted-B'
+            self.targetPath = os.path.join(path[0], os.path.splitext(path[1])[0]) + '-B'
         elif 'S2' in mode:
-            self.targetPath = os.path.join(path[0], os.path.splitext(path[1])[0]) + '-converted-C'
+            self.targetPath = os.path.join(path[0], os.path.splitext(path[1])[0]) + '-C'
 
     def saveToDir(self):
         try:
@@ -252,7 +253,7 @@ class ComicPage:
             else:
                 self.targetPath += '.jpg'
                 self.image.save(self.targetPath, 'JPEG', optimize=1, quality=85)
-            return [md5Checksum(self.targetPath), flags, self.orgPath]
+            return [md5Checksum(self.targetPath), flags, self.orgPath, self.targetPath]
         except IOError as err:
             raise RuntimeError('Cannot save image. ' + str(err))
 
@@ -284,7 +285,7 @@ class ComicPage:
         else:
             method = Image.LANCZOS
         if self.opt['stretch'] or (self.opt['kfx']
-                                   and ('-converted-B' in self.targetPath or 'converted-C' in self.targetPath)):
+                                   and ('-B' in self.targetPath or '-C' in self.targetPath)):
             self.image = self.image.resize(self.size, method)
         elif self.image.size[0] <= self.size[0] and self.image.size[1] <= self.size[1] and not self.opt['upscale']:
             if self.opt['format'] == 'CBZ' or self.opt['kfx']:
