@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 from __future__ import (unicode_literals, division, absolute_import, print_function)
 
 from PyQt5 import (QtCore, QtWidgets)
@@ -8,17 +6,10 @@ from PyQt5.QtWidgets import QLabel
 from calibre.gui2.convert import Widget
 
 
-__license__ = "GPL v3"
-__copyright__ = "2020, John Howell <jhowell@acm.org>"
-
-# the file name kfx_input and class name PluginWidget are required for calibre to access this properly
-# see config_widget_for_input_plugin() in gui2/convert/__init__.py
-
-
 class PluginWidget(Widget):
     TITLE = "Kindle Comics Input"
     HELP = "Options specific to Kindle Comics Input"
-    # ICON = I("mimetypes/kfx.png")
+    # ICON = ...
     COMMIT_NAME = "kindle_comics_input"
 
     def __init__(self, parent, get_option, get_help, db=None, book_id=None):
