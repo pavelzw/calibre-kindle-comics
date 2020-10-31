@@ -449,16 +449,6 @@ def build_opf(dest_dir, options, file_list, cover=None):
             f.write("<itemref idref=\"page_" + entry + "\"/>\n")
     f.write("</spine>\n</package>\n")
     f.close()
-    # todo maybe not
-    # os.mkdir(os.path.join(dest_dir, 'META-INF'))
-    # f = open(os.path.join(dest_dir, 'META-INF', 'container.xml'), 'w', encoding='UTF-8')
-    # f.writelines(["<?xml version=\"1.0\"?>\n",
-    #               "<container version=\"1.0\" xmlns=\"urn:oasis:names:tc:opendocument:xmlns:container\">\n",
-    #               "<rootfiles>\n",
-    #               "<rootfile full-path=\"OEBPS/content.opf\" media-type=\"application/oebps-package+xml\"/>\n",
-    #               "</rootfiles>\n",
-    #               "</container>"])
-    # f.close()
     return opf_file
 
 
@@ -467,4 +457,4 @@ def walk_sort(dir_names, file_names):
     alphanum_key = lambda key: [convert(c) for c in split('([0-9]+)', key)]
     dir_names.sort(key=lambda name: alphanum_key(name.lower()))
     file_names.sort(key=lambda name: alphanum_key(name.lower()))
-    return dir_names, file_names #t
+    return dir_names, file_names

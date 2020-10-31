@@ -30,7 +30,7 @@ class KindleComics(InputFormatPlugin):
 
         OptionRecommendation(name='bordersColor', recommended_value=True,
                              help='PLACEHOLDER.'),
-        OptionRecommendation(name='profileData', recommended_value=0, #todo gamma
+        OptionRecommendation(name='profileData', recommended_value=0,  # todo gamma
                              help='PLACEHOLDER.'),
         OptionRecommendation(name='hq', recommended_value=True,
                              help='PLACEHOLDER.'),
@@ -62,7 +62,7 @@ class KindleComics(InputFormatPlugin):
 
         print("SLEEPING 30")
         if options.manga:
-            time.sleep(30)
+            time.sleep(10)
         return opt_file
 
 
