@@ -9,7 +9,7 @@ import zipfile
 # .../Kindle Comics.zip/kindle_comic_lib/text_unidecode
 module_path = os.path.dirname(sys.modules[__name__].__file__)
 # .../Kindle Comics.zip
-zip_path = os.path.join(module_path, '../../..')
+zip_path = os.path.join(module_path, '../..')
 path_in_zip = "kindle_comic_lib/text_unidecode/data.bin"
 
 archive = zipfile.ZipFile(zip_path, 'r')

@@ -1,13 +1,10 @@
-from __future__ import (unicode_literals, division, absolute_import, print_function)
-
 import os
 import time
-
 
 from calibre.customize.conversion import InputFormatPlugin, OptionRecommendation
 
 
-class KindleComicsInput(InputFormatPlugin):
+class KindleComics(InputFormatPlugin):
     name = 'Kindle Comics'
     author = 'Pavel Zwerschke'
     supported_platforms = ['windows', 'osx', 'linux']

@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# vim:fileencoding=UTF-8:ts=4:sw=4:sta:et:sts=4:ai
 from __future__ import (unicode_literals, division, absolute_import, print_function)
 
 from PyQt5 import (QtCore, QtWidgets)
@@ -10,7 +12,7 @@ class PluginWidget(Widget):
     TITLE = "Kindle Comics Input"
     HELP = "Options specific to Kindle Comics Input"
     # ICON = ...
-    COMMIT_NAME = "kindle_comics_input"
+    COMMIT_NAME = "kindle_comics" # todo rename
 
     def __init__(self, parent, get_option, get_help, db=None, book_id=None):
         self.db = db                # db is set for conversion, but not default preferences
