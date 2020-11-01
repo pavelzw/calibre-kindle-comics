@@ -60,9 +60,6 @@ class KindleComics(InputFormatPlugin):
         stream.close()
         opt_file = make_book(_convert_options_to_dict(options), book, log)
 
-        print("SLEEPING 30")
-        if options.manga:
-            time.sleep(10)
         return opt_file
 
 

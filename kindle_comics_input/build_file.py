@@ -347,15 +347,7 @@ def build_opf(dest_dir, options, file_list, cover=None):
                   "<package version=\"3.0\" unique-identifier=\"BookID\" ",
                   "xmlns=\"http://www.idpf.org/2007/opf\">\n",
                   "<metadata xmlns:opf=\"http://www.idpf.org/2007/opf\" ",
-                  "xmlns:dc=\"http://purl.org/dc/elements/1.1/\">\n",
-                  "<dc:title>", html_escape(title), "</dc:title>\n", #todo necessary?
-                  "<dc:language>en-US</dc:language>\n",
-                  "<dc:identifier id=\"BookID\">urn:uuid:", options['uuid'], "</dc:identifier>\n"])
-                  # "<dc:contributor id=\"contributor\">KindleComicConverter-" + __version__ + "</dc:contributor>\n"]) # todo
-    if len(options['summary']) > 0:
-        f.writelines(["<dc:description>", options['summary'], "</dc:description>\n"])
-    for author in options['authors']:
-        f.writelines(["<dc:creator>", author, "</dc:creator>\n"])
+                  "xmlns:dc=\"http://purl.org/dc/elements/1.1/\">\n"])
     f.writelines(["<meta property=\"dcterms:modified\">" + strftime("%Y-%m-%dT%H:%M:%SZ", gmtime()) + "</meta>\n",
                   "<meta name=\"cover\" content=\"cover\"/>\n"])
     if options['iskindle'] and options['profile'] != 'Custom':
