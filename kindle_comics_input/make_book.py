@@ -1,4 +1,5 @@
 import os
+import time
 from re import sub, split
 from shutil import copytree, move, rmtree
 
@@ -81,8 +82,18 @@ def get_work_folder(comic_file):
 
     # move file structure up
     subdirectories = os.listdir(target_dir)
-    if 'ComicInfo.xml' in subdirectories:
-        subdirectories.remove('ComicInfo.xml')
+
+    # delete all not-images
+    for file in os.listdir(target_dir):
+        if os.path.isdir(os.path.join(target_dir, file)) \
+                or file.lower().endswith('.png') \
+                or file.lower().endswith('.jpg') \
+                or file.lower().endswith('.jpeg') \
+                or file.lower().endswith('.tif') \
+                or file.lower().endswith('.tiff'):
+            continue
+        os.remove(os.path.join(target_dir, file))
+
     if len(subdirectories) == 1 and os.path.isdir(os.path.join(target_dir, subdirectories[0])):
         for f in os.listdir(os.path.join(target_dir, subdirectories[0])):
             move(os.path.join(target_dir, subdirectories[0], f), target_dir)
