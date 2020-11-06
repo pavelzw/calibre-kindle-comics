@@ -1,14 +1,13 @@
 import os
-import time
 
 from calibre.customize.conversion import InputFormatPlugin, OptionRecommendation
 
 
 class KindleComics(InputFormatPlugin):
-    name = 'Kindle Comics'
+    name = 'Kindle Comics Input'
     author = 'Pavel Zwerschke'
     supported_platforms = ['windows', 'osx', 'linux']
-    file_types = {'cbz', 'cbr', 'cb7'}
+    file_types = {'cbz', 'cbr'}
     version = (0, 0, 1)
     description = 'Converts cbz and cbr files into a kindle format that is actually readable on Kindle devices.'
 
@@ -51,7 +50,7 @@ class KindleComics(InputFormatPlugin):
     }
 
     def gui_configuration_widget(self, parent, get_option_by_name, get_option_help, db, book_id=None):
-        from calibre_plugins.kindle_comics.kindle_comics import PluginWidget
+        from calibre_plugins.kindle_comics.kindle_comics_input import PluginWidget
         return PluginWidget(parent, get_option_by_name, get_option_help, db, book_id)
 
     def convert(self, stream, options, file_ext, log, accelerators):

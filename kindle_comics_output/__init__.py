@@ -2,7 +2,6 @@ from __future__ import (unicode_literals, division, absolute_import, print_funct
 
 import os
 import sys
-import time
 from shutil import move
 
 from calibre.customize.conversion import OutputFormatPlugin
@@ -26,7 +25,7 @@ class KindleComicsOutput(OutputFormatPlugin):
         return PluginWidget(parent, get_option_by_name, get_option_help, db, book_id)
 
     def convert(self, oeb_book, output, input_plugin, opts, log):
-        if input_plugin.name != "Kindle Comics":
+        if input_plugin.name != "Kindle Comics Input":
             log.prints(INFO, "Executing default mobi plugin.")
             from calibre.ebooks.conversion.plugins.mobi_output import MOBIOutput
             plugin_path = os.path.join(sys.modules[MOBIOutput.__module__].__file__)
@@ -51,7 +50,6 @@ class KindleComicsOutput(OutputFormatPlugin):
             mobi_output = make_mobi(zip_path)
             mobi_path = mobi_output[2]
             log.prints(INFO, "Created mobi.")
-            time.sleep(60)
 
             # move mobi file to destination
             # todo what if output is directory
