@@ -106,13 +106,7 @@ def make_zip(zipfile_name, base_dir):
 
 
 def make_mobi(epub_path):
-    # copy kindlegen to destination
-    plugin_path = os.path.join(__file__, "..")
-    plugin_zip = ZipFile(plugin_path)
-    kindlegen_path = PersistentTemporaryDirectory("_kindlegen")
-    plugin_zip.extract("kindlegen.exe", kindlegen_path)
-    kindlegen_path = os.path.join(kindlegen_path, "kindlegen.exe")
-
+    kindlegen_path = get_kindlegen()
     mobi_path = os.path.splitext(epub_path)[0] + ".mobi"
 
     # execute kindlegen
@@ -145,3 +139,18 @@ def make_mobi(epub_path):
         kindlegen_error_code = 1
         kindlegen_error = format(err)
         return [kindlegen_error_code, kindlegen_error, None]
+
+
+def get_kindlegen():
+    # copy kindlegen to destination
+    plugin_path = os.path.join(__file__, "..")
+    plugin_zip = ZipFile(plugin_path)
+    kindlegen_path = PersistentTemporaryDirectory("_kindlegen")
+
+    if os.name == 'nt':  # Windows
+        kindlegen_filename = 'kindlegen.exe'
+    else:  # Linux or macOS
+        kindlegen_filename = 'kindlegen'
+
+    plugin_zip.extract(kindlegen_filename, kindlegen_path)
+    return os.path.join(kindlegen_path, kindlegen_filename)
