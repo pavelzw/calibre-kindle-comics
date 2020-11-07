@@ -1,3 +1,8 @@
+__license__ = "ISC"
+__copyright__ = "2012-2014, Ciro Mattia Gonano <ciromattia@gmail.com>, " \
+                "2013-2019 Paweł Jastrzębski <pawelj@iosphe.re>, " \
+                "2020 Pavel Zwerschke <pavelzw@gmail.com>"
+
 import os
 from re import split
 from time import strftime, gmtime

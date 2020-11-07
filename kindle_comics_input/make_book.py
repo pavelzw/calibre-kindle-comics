@@ -1,6 +1,10 @@
+__license__ = "ISC"
+__copyright__ = "2012-2014, Ciro Mattia Gonano <ciromattia@gmail.com>, " \
+                "2013-2019 Paweł Jastrzębski <pawelj@iosphe.re>, " \
+                "2020 Pavel Zwerschke <pavelzw@gmail.com>"
+
 import os
-import time
-from re import sub, split
+from re import sub
 from shutil import copytree, move, rmtree
 
 from calibre.ptempfile import PersistentTemporaryDirectory
