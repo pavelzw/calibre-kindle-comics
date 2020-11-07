@@ -6,7 +6,7 @@
 ``.cbz`` and ``.cbr`` files into ``.mobi`` files that are 
 optimized for Kindle devices. 
 
-### Issues / new features
+### Issues/new features
 If you have problems using this plugin or feature requests, please 
 [file an issue](https://github.com/pavelzw/calibre-kindle-comics/issues/new).
 If you can fix an open issue or want to add new features, 
@@ -31,12 +31,26 @@ or ``kindlegen`` (Linux and macOS) into the ``Kindle Comics Output.zip`` file.
 Then open calibre, go to ``Preferences`` > ``Plugins`` > ``Load plugin from file``
 and select ``Kindle Comics Input.zip`` and then ``Kindle Comics Output.zip``.
 
-## INPUT FORMATS
+## Input Formats
 Calibre Kindle Comics can convert ``.cbz`` and ``.cbr`` files at the moment.
 It only converts to ``.mobi``, for other conversions like for example ``.epub``, 
 the default calibre output plugins are being used.
 
-## CREDITS
+### How this plugin works
+The Kindle Comics Input plugin acts as a converter from ``.cbz`` and ``.cbr`` 
+to ``OEB``, that's how all Plugins of the type ``InputFormatPlugin`` work.
+The Kindle Comics Output plugin then converts from the ``OEB`` format to 
+``.mobi`` by first creating a ``.epub`` file and then executing KindleGen.
+You still can convert from any other format to ``.epub``, Kindle Comics Output 
+will use the default ``.mobi`` conversion plugin when the input is not by 
+Kindle Comics Input.
+
+I haven't figured out a way that Kindle Comics Input is only executed when 
+the conversion is to ``.mobi``. That's why there may be strange results when 
+converting to other formats or when viewing the comic file in the 
+calibre ebook viewer.
+
+## Credits
 Calibre Kindle Comics is made by [Pavel Zwerschke](https://github.com/pavelzw).
 I used some of the code by [Ciro Mattia Gonano](https://github.com/ciromattia) 
 and [Paweł Jastrzębski](https://github.com/AcidWeb) from 
