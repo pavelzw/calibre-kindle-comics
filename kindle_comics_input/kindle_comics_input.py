@@ -16,7 +16,9 @@ class PluginWidget(Widget):
         self.db = db                # db is set for conversion, but not default preferences
         self.book_id = book_id      # book_id is set for individual conversion, but not bulk
 
-        Widget.__init__(self, parent, ["manga", "webtoon", "margins", "no_greyscale", "max_width", "max_height"])
+        # todo webtoon
+        # Widget.__init__(self, parent, ["manga", "webtoon", "margins", "no_greyscale", "max_width", "max_height"])
+        Widget.__init__(self, parent, ["manga", "margins", "no_greyscale", "max_width", "max_height"])
         self.initialize_options(get_option, get_help, db, book_id)
 
     def setupUi(self, Form):
@@ -33,11 +35,11 @@ class PluginWidget(Widget):
         self.opt_manga.setText("Manga mode (right-to-left)")
         self.formLayout.addRow(self.opt_manga)
 
-        # Webtoon mode
-        self.opt_webtoon = QtWidgets.QCheckBox(Form)
-        self.opt_webtoon.setObjectName("webtoon")
-        self.opt_webtoon.setText("Korean webtoons")
-        self.formLayout.addRow(self.opt_webtoon)
+        # Webtoon mode todo not tested yet
+        # self.opt_webtoon = QtWidgets.QCheckBox(Form)
+        # self.opt_webtoon.setObjectName("webtoon")
+        # self.opt_webtoon.setText("Korean webtoons")
+        # self.formLayout.addRow(self.opt_webtoon)
 
         # W/B margins
         self.margins_label = QLabel('Margins')

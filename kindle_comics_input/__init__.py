@@ -25,28 +25,7 @@ class KindleComics(InputFormatPlugin):
         OptionRecommendation(name='max_width', recommended_value="1264",
                              help='Maximum width.'),
         OptionRecommendation(name='max_height', recommended_value="1680",
-                             help='Maximum height.'),
-
-        OptionRecommendation(name='bordersColor', recommended_value=True,
-                             help='PLACEHOLDER.'),
-        OptionRecommendation(name='profileData', recommended_value=0,  # todo gamma
-                             help='PLACEHOLDER.'),
-        OptionRecommendation(name='hq', recommended_value=True,
-                             help='PLACEHOLDER.'),
-        OptionRecommendation(name='forceColor', recommended_value=False,
-                             help='PLACEHOLDER.'),
-        OptionRecommendation(name='forcepng', recommended_value=False,
-                             help='PLACEHOLDER.'),
-        OptionRecommendation(name='gamma', recommended_value=0,
-                             help='PLACEHOLDER.'),
-        OptionRecommendation(name='stretch', recommended_value=False,
-                             help='PLACEHOLDER.'),
-        OptionRecommendation(name='kfx', recommended_value=False,
-                             help='PLACEHOLDER.'),
-        OptionRecommendation(name='upscale', recommended_value=True,
-                             help='PLACEHOLDER.'),
-        OptionRecommendation(name='format', recommended_value="CBR",
-                             help='PLACEHOLDER.'),
+                             help='Maximum height.')
     }
 
     def gui_configuration_widget(self, parent, get_option_by_name, get_option_help, db, book_id=None):
@@ -82,21 +61,35 @@ def _convert_options_to_dict(options):
         0xee, 0xee, 0xee,
         0xff, 0xff, 0xff,
     ]
+    if options.margins == 'auto':
+        black_borders = False
+        white_borders = False
+        borders_color = None
+    elif options.margins == 'white':
+        black_borders = False
+        white_borders = True
+        borders_color = 'white'
+    else:  # black
+        black_borders = True
+        white_borders = False
+        borders_color = 'black'
+
     opts = {
         'manga': options.manga,
-        # 'webtoon': options.webtoon,
-        'webtoon': False,
+        'webtoon': options.webtoon,
         'margins': options.margins,
         'no_greyscale': options.no_greyscale,
         'max_width': int(options.max_width),
         'max_height': int(options.max_height),
 
-        'bordersColor': None,
-        'profileData': ('Kindle Paperwhite 3/4/Voyage/Oasis', (1072, 1448), palette, 1.8),
+        'black_borders': black_borders,
+        'white_borders': white_borders,
+        'bordersColor': borders_color,
+        'profileData': ('Kindle Paperwhite 3/4/Voyage/Oasis', (int(options.max_width), int(options.max_height)),
+                        palette, 1.8),
         'profile': 'KV',
         'hq': False,
-        'forceColor': False,
-        'forcecolor': False,
+        'forcecolor': options.no_greyscale,
         'forcepng': False,
         'gamma': 0.0,
         'stretch': False,
@@ -110,13 +103,11 @@ def _convert_options_to_dict(options):
         'panelview': True,
         'covers': [],
         'autoscale': False,
-        'righttoleft': False,
+        'righttoleft': options.manga,
         'summary': "",
-        'authors': ["Test author"],
+        'authors': ["unknown"],
         'chapters': False,
         'batchsplit': 1,
-        'black_borders': False,
-        'white_borders': False,
         'customheight': 0,
         'customwidth': 0,
         'output': None,

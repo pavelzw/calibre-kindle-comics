@@ -23,7 +23,7 @@ def build_epub(path, options, chapter_names):
     os.mkdir(os.path.join(path, 'OEBPS', 'Text'))
 
     # create style.css
-    f = open(os.path.join(path, 'OEBPS', 'Text', 'style.css'), 'w', encoding='UTF-8')
+    f = open(os.path.join(text_path, 'style.css'), 'w', encoding='UTF-8')
     f.writelines(["@page {\n",
                   "margin: 0;\n",
                   "}\n",
@@ -107,7 +107,7 @@ def build_epub(path, options, chapter_names):
             if not chapter:
                 chapter_list.append((dir_path.replace('Images', 'Text'), file_list[-1][1]))
                 chapter = True
-            if cover is None: # add cover if not exists
+            if cover is None:  # add cover if not exists
                 cover = os.path.join(image_path,
                                      'cover' + os.path.splitext(file_list[-1][1])[1].lower())
                 options['covers'].append((Cover(os.path.join(file_list[-1][0], file_list[-1][1]), cover, options),
@@ -129,7 +129,6 @@ def build_epub(path, options, chapter_names):
     #         chapternames[filename] = aChapter[1]
     #         globaldiff = pageid - (aChapter[0] + globaldiff)
 
-    options['title'] = "TITLE" #todo
     build_ncx(path, options, chapter_list, chapter_names)
     build_nav(path, options, chapter_list, chapter_names)
     return build_opf(path, options, file_list, cover)

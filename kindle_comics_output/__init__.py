@@ -16,13 +16,9 @@ class KindleComicsOutput(OutputFormatPlugin):
     file_type = "mobi"
     version = (0, 0, 1)
     minimum_calibre_version = (5, 0, 0)
-    supported_platforms = ["windows"]
+    supported_platforms = ['windows', 'osx', 'linux']
 
     options = MOBIOutput.options
-
-    def gui_configuration_widget(self, parent, get_option_by_name, get_option_help, db, book_id=None):
-        from calibre_plugins.kindle_comics_output.kindle_comics_output import PluginWidget
-        return PluginWidget(parent, get_option_by_name, get_option_help, db, book_id)
 
     def convert(self, oeb_book, output, input_plugin, opts, log):
         if input_plugin.name != "Kindle Comics Input":
