@@ -17,8 +17,8 @@ class PluginWidget(Widget):
         self.book_id = book_id      # book_id is set for individual conversion, but not bulk
 
         # todo webtoon
-        # Widget.__init__(self, parent, ["manga", "webtoon", "margins", "no_greyscale", "max_width", "max_height"])
-        Widget.__init__(self, parent, ["manga", "margins", "no_greyscale", "max_width", "max_height"])
+        # Widget.__init__(self, parent, ["manga", "webtoon", "margins", "no_greyscale", "max_width", "max_height", "gamma"])
+        Widget.__init__(self, parent, ["manga", "margins", "no_greyscale", "max_width", "max_height", "gamma"])
         self.initialize_options(get_option, get_help, db, book_id)
 
     def setupUi(self, Form):
@@ -73,5 +73,13 @@ class PluginWidget(Widget):
         self.opt_max_height = QtWidgets.QLineEdit(Form)
         self.opt_max_height.setObjectName("max_height")
         self.formLayout.addRow(self.opt_max_height)
+
+        # Gamma
+        self.max_gamma_label = QLabel('Gamma:')
+        self.formLayout.addRow(self.max_gamma_label)
+
+        self.opt_gamma = QtWidgets.QLineEdit(Form)
+        self.opt_gamma.setObjectName("gamma")
+        self.formLayout.addRow(self.opt_gamma)
 
         QtCore.QMetaObject.connectSlotsByName(Form)

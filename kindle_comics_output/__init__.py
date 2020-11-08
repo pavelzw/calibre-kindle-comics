@@ -14,7 +14,7 @@ class KindleComicsOutput(OutputFormatPlugin):
     name = "Kindle Comics Output"
     author = "Pavel Zwerschke"
     file_type = "mobi"
-    version = (0, 0, 1)
+    version = (0, 0, 2)
     minimum_calibre_version = (5, 0, 0)
     supported_platforms = ['windows', 'osx', 'linux']
 

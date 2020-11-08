@@ -8,7 +8,7 @@ class KindleComics(InputFormatPlugin):
     author = 'Pavel Zwerschke'
     supported_platforms = ['windows', 'osx', 'linux']
     file_types = {'cbz', 'cbr'}
-    version = (0, 0, 1)
+    version = (0, 0, 2)
     description = 'Converts cbz and cbr files into a kindle format that is actually readable on Kindle devices.'
 
     minimum_calibre_version = (5, 0, 0)
@@ -25,7 +25,9 @@ class KindleComics(InputFormatPlugin):
         OptionRecommendation(name='max_width', recommended_value="1264",
                              help='Maximum width.'),
         OptionRecommendation(name='max_height', recommended_value="1680",
-                             help='Maximum height.')
+                             help='Maximum height.'),
+        OptionRecommendation(name='gamma', recommended_value="1.0",
+                             help='Gamma correction. 0 means automatic.')
     }
 
     def gui_configuration_widget(self, parent, get_option_by_name, get_option_help, db, book_id=None):
@@ -91,7 +93,7 @@ def _convert_options_to_dict(options):
         'hq': False,
         'forcecolor': options.no_greyscale,
         'forcepng': False,
-        'gamma': 0.0,
+        'gamma': float(options.gamma),
         'stretch': False,
         'kfx': False,
         'upscale': False,
