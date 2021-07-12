@@ -48,7 +48,8 @@ Kindle Comics Input.
 I haven't figured out a way that Kindle Comics Input is only executed when 
 the conversion is to ``.mobi``. That's why there may be strange results when 
 converting to other formats or when viewing the comic file in the 
-calibre ebook viewer.
+calibre ebook viewer. You may want to deactivate the plugin while converting 
+non-comics to other file formats.
 
 ## Credits
 Calibre Kindle Comics is made by [Pavel Zwerschke](https://github.com/pavelzw).
