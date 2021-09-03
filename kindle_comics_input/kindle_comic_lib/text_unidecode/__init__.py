@@ -12,7 +12,7 @@ module_path = os.path.dirname(sys.modules[__name__].__file__)
 zip_path = os.path.join(module_path, '../..')
 path_in_zip = "kindle_comic_lib/text_unidecode/data.bin"
 
-archive = zipfile.ZipFile(zip_path, 'r')
+archive = zipfile.ZipFile(os.path.abspath(zip_path), 'r')
 data = archive.read(path_in_zip)
 
 _replaces = data.decode('utf8').split('\x00')

@@ -61,3 +61,8 @@ of the comic files.
 The plugin uses the ``image.py`` class from Alex Yatskov's [Mangle](https://github.com/FooSoft/mangle/) 
 with subsequent [proDOOMman's](https://github.com/proDOOMman/Mangle) 
 and [Birua's](https://github.com/Birua/Mangle) patches.
+
+## Considerations for MacOS
+Get kindlegen by installing `kindle-comic-creator` with brew. The executable will be located at this location:
+`/Applications/Kindle Comic Creator/Kindle Comic Creator.app/Contents/MacOS/kindlegen`. Otherwise you might run into
+issues with `kindlegen` being only 32-bit compatible.

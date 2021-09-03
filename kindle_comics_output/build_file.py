@@ -1,4 +1,5 @@
 import os
+import stat
 from subprocess import Popen, PIPE, STDOUT
 
 from calibre.ptempfile import PersistentTemporaryDirectory
@@ -144,7 +145,7 @@ def make_mobi(epub_path):
 def get_kindlegen():
     # copy kindlegen to destination
     plugin_path = os.path.join(__file__, "..")
-    plugin_zip = ZipFile(plugin_path)
+    plugin_zip = ZipFile(os.path.abspath(plugin_path))
     kindlegen_path = PersistentTemporaryDirectory("_kindlegen")
 
     if os.name == 'nt':  # Windows
@@ -153,4 +154,7 @@ def get_kindlegen():
         kindlegen_filename = 'kindlegen'
 
     plugin_zip.extract(kindlegen_filename, kindlegen_path)
+    if os.name != 'nt':  # Linux or macOS
+        # Execute permissions needed
+        os.chmod(os.path.join(kindlegen_path, kindlegen_filename), stat.S_IEXEC)
     return os.path.join(kindlegen_path, kindlegen_filename)
